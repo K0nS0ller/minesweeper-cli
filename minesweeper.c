@@ -47,7 +47,7 @@ void begin(){
 
 	for(int r = 1; r < 10; r++){
 		for(int c = 1; c < 10; c++){
-			if(randnum() % 101 < 12){
+			if(randnum() % 101 < 1){
 				grid[r][c].mine = true;
 				bomb_count++;
 			}
@@ -187,24 +187,28 @@ void logic(){
 						}
 					}
 				}
+			}
 		}
 		if(game_status == 0){
 			logic();
 		}
 	}
-
 	if(todo == 0){
 		logic();
 	}
-
 	if(todo == 2){
 		if (grid[row][column].flag == false && grid[row][column].opened == false){
 			grid[row][column].flag = true;
 			printf("flag set!\n");
 			flags++;
-			logic();
+			bomb_count -= 1;
+			if(bomb_count = 0){
+				printf("you win!!");
+				exit;
+			}else{
+				logic();
+			}
 		}
-		logic();
 	}
 	if(todo == 3){
 		if (grid[row][column].flag){
@@ -215,6 +219,8 @@ void logic(){
 		logic();
 	}
 }
+
+
 int main() {
 	printf("          m                                                                  \n mmmmm  mmm    m mm    mmm    mmm  m     m  mmm    mmm   mmmm    mmm    m mm \n # # #    #    #   #  #   #  #      m m m  #   #  #   #  #   #  #   #   #   m\n # # #    #    #   #  #***   ***m   #m#m#  #****  #****  #   #  #****   #  \n # # #  mm#mm  #   #  *#mm*  *mmm*   # #   *#mm*  *#mm*  ##m#*  *#mm*   #    \n                                                         #\n                                                         #\n");
 	begin();
